@@ -1,16 +1,20 @@
 const express = require('express');
 const db = require('./config/db');
+const methodOverride = require('method-override');
 const userRoutes = require('./routes/routes')
 const session = require('express-session');
-const flash = require('express-flash');
+
+//const flash = require('express-flash');
+//const cloudinary = require('./utils/cloudinary')
+const upload = require('./utils/multer')
+const bodyParser = require('body-parser')
 require('dotenv').config();
 const ejs = require('ejs');
 
-
-
 const app = express();
-
-
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json())
+app.use('', userRoutes)
 
 
 
@@ -18,17 +22,9 @@ const app = express();
 
 app.use(express.static('uploads'))
 
-app.use(session({
-    secret: "helloma",
-    resave: false,
-    saveUninitialized: false,
-    cookie: { maxAge: 60000 }
-}));
 
 
-
-
-app.use(flash());
+//app.use(flash());
 app.set("view engine", "ejs")
 
 
@@ -36,9 +32,6 @@ app.set("view engine", "ejs")
 
 
 
-app.use('', userRoutes)
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
 
 
 
@@ -47,7 +40,6 @@ app.use(express.json());
 
 
 const PORT = process.env.PORT || 3000
-
 
 
 
