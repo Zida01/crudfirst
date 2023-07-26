@@ -12,8 +12,11 @@ require('dotenv').config();
 const ejs = require('ejs');
 
 const app = express();
+
+app.use(methodOverride('_method'));
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json())
+app.use(express.json());
+
 app.use('', userRoutes)
 
 
